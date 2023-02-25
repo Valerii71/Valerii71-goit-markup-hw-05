@@ -11,6 +11,7 @@
 }
 
 body {
+  padding-top: 72px;
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   line-height: 1.5;
@@ -53,6 +54,12 @@ img {
 /* Header */
 
 .header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: var(--main-color);
   border-bottom: 1px solid var(--border-color);
   box-shadow: 0px 2px 1px rgba(46, 47, 66, 0.08), 0px 1px 1px rgba(46, 47, 66, 0.16), 0px 1px 6px rgba(46, 47, 66, 0.08);
 }
@@ -100,6 +107,7 @@ img {
 .site-nav a {
   font-weight: 500;
   color: var(--title-text-color);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
 }
 
 .link {
@@ -118,13 +126,26 @@ img {
 }
 
 .site-nav .link.current {
+  position: relative;
   color: var(--accent-color);
+}
+
+.current::after {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 100%;
+  height: 4px;
+  background-color: currentColor;
+  border-radius: 2px;
+  bottom: -1px;
 }
 
 .address-list a {
   font-style: normal;
   color: var(--primery-text-color);
   text-decoration: none;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
 }
 
 .address-list .address-link:hover,
@@ -168,7 +189,7 @@ img {
 .btn {
   display: inline-block;
   padding: 16px 32px;
-  background: var(--logo-first-color);
+  background-color: var(--logo-first-color);
   border-radius: 4px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   border: none;
@@ -178,10 +199,11 @@ img {
   letter-spacing: 0.04em;
   cursor: pointer;
   color: var(--main-color);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
 }
 
 .btn:active {
-  background: var(--accent-color);
+  background-color: var(--accent-color);
   ;
 }
 
@@ -311,6 +333,7 @@ img {
   background-color: var(--logo-first-color);
   border-radius: 50%;
   fill: var(--team-color);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
 }
 
 .team-box:hover,
@@ -345,6 +368,7 @@ img {
   border: 1px solid var(--icon-space);
   border-radius: 4px;
   fill: var(--icon-space);
+  transition: border 250ms cubic-bezier(0.4, 0, 0.2, 0.1), fill 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
 }
 
 .customer-box:hover,
@@ -392,6 +416,7 @@ img {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   fill: var(--team-color);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
 }
 
 .foot-box:hover,
@@ -425,6 +450,8 @@ img {
   background-color: var(--team-color);
   border: 1px solid var(--border-color);
   border-radius: 4px;
+  box-shadow: none;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 0.1), background-color 250ms cubic-bezier(0.4, 0, 0.2, 0.1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
 }
 
 .filter button:hover,
@@ -457,11 +484,39 @@ img {
 .work-link {
   display: block;
   text-decoration: none;
+  box-shadow: none;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
 }
 
 .work-link:hover,
 .work-link:focus {
   box-shadow: 0px 1px 6px rgba(46, 47, 66, 0.08), 0px 1px 1px rgba(46, 47, 66, 0.16), 0px 2px 1px rgba(46, 47, 66, 0.08);
+}
+
+.work-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.work-description {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--team-color);
+  background-color: var(--logo-first-color);
+  transform: translateY(100%);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
+}
+
+.work-link:hover .work-description,
+.work-link:focus .work-description {
+  transform: translateY(0);
+}
+
+.description {
+  padding: 40px 32px;
 }
 
 .works-list .title {
@@ -475,4 +530,60 @@ img {
 
 .work-text {
   color: var(--primery-text-color);
+}
+
+/* Modal */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 88px;
+  padding-bottom: 12px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(46, 47, 66, 0.4);
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 0.1), visibility 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal {
+  position: relative;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 408px;
+  max-height: 576px;
+  background-color: #FCFCFC;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 0.1);
+}
+
+.backdrop.is-hidden .modal {
+  transform: scale(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  fill: #000000;
+  border-radius: 50%;
+  background-color: var(--border-color);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
